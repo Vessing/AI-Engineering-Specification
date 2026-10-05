@@ -1,0 +1,195 @@
+<!doctype html>
+<html lang="de">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Workspace UI Baseline</title>
+  <style>
+    :root {
+      color: #172033;
+      background: #eef2f7;
+      font: 14px/1.45 Inter, Arial, sans-serif;
+    }
+    * { box-sizing: border-box; }
+    body { margin: 0; }
+    header {
+      display: flex; align-items: center; justify-content: space-between;
+      gap: 24px; border-bottom: 1px solid #d7dde8; background: #fff;
+      padding: 18px 28px;
+    }
+    h1, h2, p { margin: 0; }
+    h1 { font-size: 22px; }
+    h2 { margin-bottom: 14px; font-size: 17px; }
+    header p, .muted { color: #64748b; }
+    main { display: grid; gap: 28px; padding: 28px; }
+    .panel { border: 1px solid #d7dde8; border-radius: 8px; background: #fff; padding: 20px; }
+    .baseline-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 20px; }
+    figure { margin: 0; }
+    .shot { position: relative; overflow: hidden; border: 1px solid #c8d1df; background: #f8fafc; }
+    .shot img { display: block; width: 100%; height: auto; }
+    figcaption { margin-top: 10px; color: #4b5870; }
+    .badge {
+      position: absolute; display: grid; width: 28px; height: 28px;
+      place-items: center; border: 2px solid #fff; border-radius: 50%;
+      background: #155eef; color: #fff; font-weight: 800;
+      box-shadow: 0 2px 8px rgb(15 23 42 / 30%);
+    }
+    .b1 { left: 1.5%; top: 2%; } .b2 { left: 19%; top: 13%; }
+    .b3 { left: 40%; top: 35%; } .b4 { right: 2%; top: 25%; }
+    .b5 { left: 38%; bottom: 3%; } .b6 { right: 11%; top: 10%; } .b8 { right: 2%; top: 2%; }
+    .legend { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px; margin-top: 16px; }
+    .legend div { border-left: 3px solid #155eef; background: #f8fafc; padding: 9px 11px; }
+    .wireframe-wrap { display: grid; grid-template-columns: minmax(0, 1fr) 360px; gap: 24px; align-items: start; }
+    .wireframe {
+      display: grid; min-height: 510px; grid-template: 62px minmax(0, 1fr) 132px / 220px minmax(320px, 1fr) 280px;
+      border: 1px solid #aeb9ca; background: #fff;
+    }
+    .region { display: grid; place-items: center; border: 1px solid #aeb9ca; color: #1e293b; font-weight: 700; text-align: center; padding: 12px; }
+    .top { grid-column: 1 / -1; display: flex; justify-content: space-between; }
+    .canvas { background: #f8fafc; }
+    .bottom { grid-column: 1 / -1; }
+    .narrow {
+      display: grid; width: 320px; min-height: 568px;
+      grid-template-rows: 58px 48px minmax(300px, 1fr) 120px;
+      border: 1px solid #aeb9ca; background: #fff;
+    }
+    .narrow .drawer-note { background: #eff6ff; color: #1d4ed8; }
+    table { width: 100%; border-collapse: collapse; }
+    th, td { border-bottom: 1px solid #e5eaf2; padding: 10px; text-align: left; vertical-align: top; }
+    th { color: #475569; font-size: 12px; text-transform: uppercase; }
+    .states { display: flex; flex-wrap: wrap; gap: 8px; }
+    .state { border: 1px solid #c8d1df; border-radius: 5px; background: #f8fafc; padding: 6px 9px; }
+    .selected { border-color: #2563eb; color: #1d4ed8; }
+    .error { border-color: #dc2626; color: #991b1b; }
+    .disabled { color: #94a3b8; opacity: .65; }
+    .workflow { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 8px; margin-top: 14px; }
+    .workflow-step { position: relative; border: 1px solid #aeb9ca; border-radius: 5px; background: #fff; padding: 12px; min-height: 64px; }
+    .workflow-step strong { display: block; color: #155eef; margin-bottom: 4px; }
+    .workflow-step:not(:last-child)::after { content: "\2192"; position: absolute; right: -9px; top: 22px; z-index: 1; background: #f5f7fb; color: #475569; }
+    .advanced { margin-top: 10px; border-left: 3px solid #64748b; background: #f8fafc; padding: 10px 12px; }
+    .controls { display: flex; flex-wrap: wrap; gap: 8px; justify-content: center; }
+    .control { min-height: 40px; border: 1px solid #64748b; border-radius: 5px; background: #fff; color: #172033; padding: 8px 12px; font: inherit; font-weight: 700; }
+    .focus-demo { outline: 3px solid #f59e0b; outline-offset: 2px; }
+    .help-panel { border-left: 4px solid #155eef; background: #eef4ff; padding: 12px 14px; margin-top: 12px; }
+    .token-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; }
+    .token { border: 1px solid #c8d1df; background: #fff; padding: 12px; }
+    .drawer-demo { border: 1px solid #64748b; background: #fff; margin-top: 12px; }
+    .drawer-head { display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #c8d1df; padding: 8px 10px; font-weight: 700; }
+    .drawer-body { padding: 16px 10px; color: #475569; }
+    @media (max-width: 900px) {
+      .baseline-grid, .wireframe-wrap, .legend, .workflow, .token-grid { grid-template-columns: 1fr; }
+      .workflow-step:not(:last-child)::after { content: "\2193"; right: 50%; top: auto; bottom: -12px; }
+      .wireframe { grid-template: 56px minmax(320px, 1fr) 120px / minmax(0, 1fr); }
+      .wireframe .explorer, .wireframe .properties { display: none; }
+      .top, .bottom { grid-column: 1; }
+      .narrow { width: 100%; }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div><h1>Workspace · UI Baseline and Component Grid</h1><p>Freigabereferenz für spätere UML-/OCL-Mockups</p></div>
+    <strong>Status: M1 READY_FOR_REVIEW</strong>
+  </header>
+  <main>
+    <section class="panel">
+      <h2>Annotierte Desktop-Baseline</h2>
+      <div class="baseline-grid">
+        <figure>
+          <div class="shot">
+            <img src="../screenshots/01-class-diagram-class-properties.png" alt="Klassendiagramm mit Explorer, Canvas, Properties und Bottom Panel">
+            <span class="badge b1">1</span><span class="badge b2">2</span><span class="badge b3">3</span>
+            <span class="badge b4">4</span><span class="badge b5">5</span><span class="badge b6">6</span><span class="badge b8">8</span>
+          </div>
+          <figcaption>Klassendiagramm als primäre Referenz für die dreispaltige Arbeitsfläche.</figcaption>
+        </figure>
+        <figure>
+          <div class="shot">
+            <img src="../screenshots/13-ocl-editor.png" alt="OCL Editor ohne Explorer und Properties Panel">
+            <span class="badge b1">1</span><span class="badge b3">7</span><span class="badge b5">5</span><span class="badge b6">6</span><span class="badge b8">8</span>
+          </div>
+          <figcaption>OCL Editor als Vollbreitenvariante innerhalb derselben Workspace-Shell.</figcaption>
+        </figure>
+      </div>
+      <div class="legend">
+        <div><strong>1 Top Bar</strong><br>Logo, Projektname, Hauptnavigation</div>
+        <div><strong>2 Explorer</strong><br>Kontextgruppen und Create-Aktionen</div>
+        <div><strong>3 Canvas</strong><br>verschiebbare UML-Elemente und Kanten</div>
+        <div><strong>4 Properties</strong><br>selektionsabhängig, intern scrollbar</div>
+        <div><strong>5 Bottom Panel</strong><br>Console und Validation Results</div>
+        <div><strong>6 Globale Aktionen</strong><br>Refresh und Check Constraints, stets in derselben Reihenfolge</div>
+        <div><strong>7 OCL Editor</strong><br>Vollbreite, Modelltext und Apply-Zustände</div>
+        <div><strong>8 Quick Help</strong><br>Kontextbezogen am Arbeitsbereich, nicht als wechselnde globale Aktion</div>
+      </div>
+    </section>
+
+    <section class="panel">
+      <h2>Einfacher Kernworkflow</h2>
+      <p>Die Hauptnavigation zeigt Anfängern jederzeit den nächsten fachlichen Schritt. Erweiterte Funktionen bleiben verfügbar, konkurrieren aber nicht mit diesem Weg.</p>
+      <div class="workflow" aria-label="Kernworkflow">
+        <div class="workflow-step"><strong>1 Dashboard</strong>Projekt auswählen oder anlegen</div>
+        <div class="workflow-step"><strong>2 Start Project</strong>Name und Einstieg festlegen</div>
+        <div class="workflow-step"><strong>3 Class Diagram</strong>Modellstruktur bearbeiten</div>
+        <div class="workflow-step"><strong>4 Object Diagram</strong>Snapshot aufbauen</div>
+        <div class="workflow-step"><strong>5 Check Constraints</strong>Ergebnisse prüfen</div>
+      </div>
+      <div class="advanced"><strong>Erweiterte Werkzeuge:</strong> OCL Editor, Compliance, State Machines und Operation Traces werden kontextbezogen oder unter „Weitere Werkzeuge“ angeboten.</div>
+    </section>
+
+    <section class="panel">
+      <h2>Verbindliches Raster</h2>
+      <div class="wireframe-wrap">
+        <div class="wireframe" aria-label="Desktop-Raster">
+          <div class="region top"><span>Logo · Projektname · Tabs</span><span>Refresh · Check Constraints</span></div>
+          <div class="region explorer">Explorer<br>220–240 px<br>eigener Scrollbereich</div>
+          <div class="region canvas">Canvas / Editor<br>minmax(0, 1fr)<br>kein Überdecken durch Panels</div>
+          <div class="region properties">Properties<br>280–320 px<br>eigener Scrollbereich</div>
+          <div class="region bottom">Bottom Panel · 120–220 px · Console/Validation intern scrollbar</div>
+        </div>
+        <div class="narrow" aria-label="Schmales responsives Raster">
+          <div class="region">Logo · Projekt · Refresh · Check</div>
+          <div class="region">scrollbare Haupttabs</div>
+          <div class="region">Canvas / Editor</div>
+          <div class="region">Bottom Panel</div>
+          <div class="region drawer-note">
+            <div><div class="controls"><button class="control">Explorer</button><button class="control focus-demo">Properties</button><button class="control">Hilfe</button></div><div class="drawer-demo"><div class="drawer-head"><span>Properties</span><button class="control" aria-label="Properties schließen">Schließen</button></div><div class="drawer-body">Getrennte Drawer; Fokus kehrt beim Schließen zur auslösenden Aktion zurück.</div></div></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="panel">
+      <h2>Accessibility-, Hilfe- und Modernisierungsbaseline</h2>
+      <div class="token-grid">
+        <div class="token"><strong>Lesbarkeit</strong><br>Fließtext und Formfelder mindestens 14 px, Diagrammtext mindestens 13 px, kompakte Metadaten mindestens 12 px.</div>
+        <div class="token"><strong>Kontrast</strong><br>Mindestens 4,5:1 für normalen Text und 3:1 für große Schrift sowie relevante UI-Grenzen.</div>
+        <div class="token"><strong>Bedienflächen</strong><br>Mindestens 40 px hoch auf Desktop und 44 px in der schmalen Ansicht; Symbole erhalten Text oder Tooltip und zugänglichen Namen.</div>
+        <div class="token"><strong>Tastaturfokus</strong><br>Mindestens 3 px sichtbarer Fokusring; logische Reihenfolge Top Bar, Navigation, Hauptfläche, Seitenpanel, Bottom Panel.</div>
+        <div class="token"><strong>Zustände</strong><br>Selected, Error und Disabled werden nie nur durch Farbe vermittelt; Text, Icon oder Rahmen ergänzt die Aussage.</div>
+        <div class="token"><strong>Moderne USE-Identität</strong><br>Bestehendes Logo und UML/OCL-Fachsprache bleiben erhalten; Raster, Abstände, Typografie und Controls werden konsistent modernisiert.</div>
+      </div>
+      <div class="help-panel"><strong>Gestuftes Hilfemodell:</strong> Tooltip für einzelne Controls, Inline-Hinweis bei Eingaben, Quick Help für die aktuelle View sowie Documentation und Examples für vertiefende Inhalte.</div>
+    </section>
+
+    <section class="panel">
+      <h2>Zustandsraster für spätere Mockups</h2>
+      <div class="states">
+        <span class="state">Default</span><span class="state selected">Selected / Focus</span>
+        <span class="state">Editing</span><span class="state">Loading</span>
+        <span class="state error">Error</span><span class="state disabled">Disabled</span>
+        <span class="state">Empty</span><span class="state">Confirmation</span>
+      </div>
+      <table>
+        <thead><tr><th>Bereich</th><th>Stabile Regel</th><th>Nicht in M1 festgelegt</th></tr></thead>
+        <tbody>
+          <tr><td>Explorer</td><td>Auswahl synchronisiert Canvas und Properties.</td><td>Neue UML-Gruppen aus M2–M10.</td></tr>
+          <tr><td>Canvas</td><td>Positionen bleiben stabil; Namen statt IDs.</td><td>Neue UML-Notationen und Edge-Arten.</td></tr>
+          <tr><td>Properties</td><td>Segmentiert, kontextbezogen und intern scrollbar.</td><td>Fachfelder späterer Schritte.</td></tr>
+          <tr><td>Bottom Panel</td><td>Console und Validation Results wechseln per Tabs.</td><td>Neue Fehler- und Trace-Details.</td></tr>
+          <tr><td>OCL Editor</td><td>Vollbreite ohne Seitenleisten; Apply mit Statusfeedback.</td><td>Compliance-, State- und Message-UI.</td></tr>
+        </tbody>
+      </table>
+    </section>
+  </main>
+</body>
+</html>

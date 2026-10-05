@@ -1,0 +1,17 @@
+/* Canonical Class Diagram workspace shell. Domain-specific panel content stays local. */
+.top{display:flex!important;min-height:64px!important;align-items:center!important;gap:18px!important;border-bottom:1px solid #d7dde8!important;background:#fff!important;padding:0 18px!important}
+.top>.tabs,.top .tabs{display:flex!important;align-items:center!important;justify-content:center!important;gap:8px!important;margin:auto!important}
+.top .tab{min-height:44px!important;border:1px solid transparent!important;border-radius:8px!important;background:transparent!important;padding:0 18px!important;color:#172033!important;font-size:15px!important;font-weight:400!important}
+.top .tab.active,.top .tabs .active{border-color:transparent!important;background:#e5edfb!important;color:#1d4ed8!important;font-weight:800!important}
+.explorer{min-width:0;overflow:auto!important;border-right:1px solid #d7dde8!important;background:#fff!important;padding:15px!important;color:#172033}
+.explorer h2,.explorer .side-title,.explorer .panel-title{margin:0;color:#475569;font-size:12px!important;font-weight:800;text-transform:uppercase;letter-spacing:0}
+.explorer .search,.explorer input[type="search"]{width:100%;margin:12px 0!important;border:1px solid #aeb9ca!important;border-radius:5px!important;background:#fff!important;padding:9px!important;color:#172033}
+.explorer .tree{margin:0;padding:0;list-style:none}
+.explorer .tree-row,.explorer .tree li,.explorer .tree-item{border-radius:5px!important}
+.explorer .tree-row.active,.explorer .tree li.active,.explorer .tree-item.active{background:#e8f0ff!important;color:#1d4ed8!important;font-weight:800!important}
+.properties{min-width:0;overflow:auto!important;border-left:1px solid #d7dde8!important;background:#fff!important;padding:15px!important;color:#172033}
+.properties>h2,.properties .properties-title{margin:0 0 10px!important;color:#172033;font-size:17px!important;letter-spacing:0}
+.properties .segment{display:grid!important;margin-bottom:14px!important;border:0!important;border-radius:7px!important;background:#e5e7eb!important;padding:3px!important;box-shadow:none!important}
+.properties .segment>span,.properties .segment>button{min-height:34px;border:0!important;border-radius:5px!important;background:transparent!important;padding:8px 5px!important;color:#334155!important;text-align:center;font-size:11px!important}
+.properties .segment>.active{background:#fff!important;color:#172033!important;font-weight:800!important;box-shadow:0 1px 2px #0f172a12!important}
+@media(max-width:1000px){.top{gap:10px!important;padding:0 12px!important}.top>.tabs,.top .tabs{overflow-x:auto!important;justify-content:flex-start!important}.top .tab{white-space:nowrap}.properties{border-left:0!important;border-top:1px solid #d7dde8!important}}

@@ -1,0 +1,145 @@
+<!doctype html>
+<html lang="de">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Introduction - USE Web Documentation</title>
+  <style>
+    :root { color: #172033; background: #eef2f7; font: 14px/1.6 Inter, Arial, sans-serif; }
+    * { box-sizing: border-box; } body { margin: 0; }
+    
+    header {
+      display: flex; align-items: center; justify-content: space-between;
+      gap: 24px; border-bottom: 1px solid #d7dde8; background: #fff;
+      padding: 16px 28px; position: sticky; top: 0; z-index: 100;
+    }
+    h1, h2, h3, p { margin: 0; }
+    h1 { font-size: 20px; font-weight: 700; color: #172033; }
+    h2 { font-size: 28px; margin-bottom: 16px; padding-bottom: 8px; border-bottom: 1px solid #e5eaf2; }
+    h3 { font-size: 20px; margin-top: 32px; margin-bottom: 12px; color: #0f172a; }
+    p { margin-bottom: 16px; color: #475569; }
+    
+    .search-bar { padding: 8px 12px; border: 1px solid #c8d1df; border-radius: 6px; width: 300px; font-size: 14px; }
+    .back-btn { padding: 8px 16px; background: #155eef; color: #fff; text-decoration: none; border-radius: 6px; font-weight: 600; font-size: 13px; }
+    
+    .layout-wrapper {
+      display: grid; grid-template-columns: 260px minmax(0, 1fr) 220px; gap: 0;
+      max-width: 1440px; margin: 0 auto; background: #fff; min-height: calc(100vh - 65px);
+      border-left: 1px solid #d7dde8; border-right: 1px solid #d7dde8;
+    }
+    
+    /* Sidebar Navigation */
+    .sidebar { border-right: 1px solid #e5eaf2; padding: 24px 0; background: #f8fafc; overflow-y: auto; }
+    .sidebar-group { margin-bottom: 24px; }
+    .sidebar-group-title { font-size: 11px; text-transform: uppercase; font-weight: 700; color: #64748b; padding: 0 20px; margin-bottom: 8px; letter-spacing: 0.5px; }
+    .nav-item {
+      display: block; padding: 8px 20px 8px 28px; color: #4b5870; text-decoration: none; font-size: 14px;
+      border-left: 3px solid transparent; transition: all 0.2s;
+    }
+    .nav-item:hover { background: #eef4ff; color: #155eef; }
+    .nav-item.active { background: #eef4ff; color: #155eef; border-left-color: #155eef; font-weight: 600; }
+    .nav-item.nested-nav { padding-left: 44px; font-size: 13.5px; color: #64748b; position: relative; }
+    .nav-item.nested-nav::before { content: ""; position: absolute; left: 26px; top: 15px; width: 8px; height: 1px; background: #c8d1df; }
+    .nav-item.nested-nav:hover { color: #155eef; }
+
+    /* Main Content Area */
+    .content-area { padding: 40px 60px; overflow-y: auto; }
+    .doc-section { margin-bottom: 48px; }
+    .feature-card { border: 1px solid #e5eaf2; border-radius: 8px; padding: 20px; background: #f8fafc; margin-bottom: 16px; }
+    .feature-card strong { color: #155eef; display: block; margin-bottom: 4px; font-size: 15px; }
+    
+    /* On this page (Right Sidebar) */
+    .toc-sidebar { border-left: 1px solid #e5eaf2; padding: 24px 20px; background: #fff; }
+    .toc-title { font-weight: 700; font-size: 12px; text-transform: uppercase; margin-bottom: 12px; color: #172033; }
+    .toc-link { display: block; font-size: 13px; color: #64748b; text-decoration: none; margin-bottom: 8px; }
+    .toc-link:hover { color: #155eef; }
+  </style>
+</head>
+<body>
+
+  <header>
+    <div><h1>USE Web Documentation</h1></div>
+    <input type="text" class="search-bar" placeholder="Search documentation..." />
+    <a href="#" class="back-btn">Back to Workspace</a>
+  </header>
+
+  <div class="layout-wrapper">
+    <!-- Left Navigation -->
+    <nav class="sidebar">
+      <div class="sidebar-group">
+        <div class="sidebar-group-title">Overview</div>
+        <a href="documentation-page.html" class="nav-item active">Introduction</a>
+      </div>
+      
+      <div class="sidebar-group">
+        <div class="sidebar-group-title">Core Elements</div>
+        <a href="#" class="nav-item">Imports</a>
+        <a href="#" class="nav-item">Enumerations</a>
+        <a href="#" class="nav-item">Datatypes</a>
+      </div>
+      
+      <div class="sidebar-group">
+        <div class="sidebar-group-title">Class Diagram</div>
+        <a href="#" class="nav-item">Diagram Overview</a>
+        <a href="documentation-classes.html" class="nav-item nested-nav">Properties</a>
+        <a href="documentation-associations.html" class="nav-item nested-nav">Associations</a>
+        <a href="#" class="nav-item nested-nav">Invariants</a>
+      </div>
+      
+      <div class="sidebar-group">
+        <div class="sidebar-group-title">Object Diagram</div>
+        <a href="#" class="nav-item">Diagram Overview</a>
+        <a href="#" class="nav-item nested-nav">Objects</a>
+        <a href="#" class="nav-item nested-nav">Object Links</a>
+        <a href="#" class="nav-item nested-nav">Operation Invocation</a>
+      </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="content-area">
+      
+      <div class="doc-section" id="what-is-use">
+        <h2>Welcome to USE Web</h2>
+        <p><strong>USE (UML-based Specification Environment)</strong> is a powerful tool for modeling and analyzing software systems using the Unified Modeling Language (UML) and the Object Constraint Language (OCL).</p>
+        <p>Originally developed as a Java-based desktop application, <strong>USE Web</strong> brings these capabilities directly to your browser with a modern, intuitive interface. It allows developers, analysts, and students to validate software designs early, ensuring conceptual integrity long before any production code is written.</p>
+      </div>
+
+      <div class="doc-section" id="core-concepts">
+        <h3>Core Concepts</h3>
+        <p>The USE workflow revolves around three main pillars that allow you to specify and test your models interactively:</p>
+        
+        <div class="feature-card">
+          <strong>1. Structural Modeling (Class Diagram)</strong>
+          Define the blueprint of your system. You create Classes, define their Attributes and Operations, and establish structural relationships via Associations and Generalizations.
+        </div>
+        
+        <div class="feature-card">
+          <strong>2. Instantiation (Object Diagram)</strong>
+          Create concrete "Snapshots" of your system at a specific point in time. This involves instantiating Objects from your classes, setting specific attribute values, and connecting objects with Links based on your defined associations.
+        </div>
+        
+        <div class="feature-card">
+          <strong>3. Constraint Validation (OCL)</strong>
+          Write precise OCL invariants and pre-/post-conditions to enforce business rules. USE evaluates these expressions against your Object Diagram snapshots and instantly highlights any inconsistencies or violations.
+        </div>
+      </div>
+
+      <div class="doc-section" id="navigating">
+        <h3>Navigating the Documentation</h3>
+        <p>Use the sidebar on the left to explore specific topics in depth. The documentation is organized by diagram type and feature, allowing you to quickly find details on specific panels, vocabulary, and UI controls.</p>
+        <p>For example, exploring the <em>Class Diagram &rarr; Associations</em> page will guide you through setting multiplicities, roles, and navigability.</p>
+      </div>
+      
+    </main>
+
+    <!-- Right Sidebar TOC -->
+    <aside class="toc-sidebar">
+      <div class="toc-title">On this page</div>
+      <a href="#what-is-use" class="toc-link">Welcome to USE Web</a>
+      <a href="#core-concepts" class="toc-link">Core Concepts</a>
+      <a href="#navigating" class="toc-link">Navigating the Documentation</a>
+    </aside>
+  </div>
+
+</body>
+</html>

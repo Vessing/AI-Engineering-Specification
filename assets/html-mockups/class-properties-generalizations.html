@@ -1,0 +1,350 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Class Properties · Generalizations</title><link rel="stylesheet" href="workspace-bottom-panel-shell.css"><link rel="stylesheet" href="workspace-model-shell.css">
+<style>
+*{box-sizing:border-box}body{margin:0;background:#eef2f7;color:#172033;font:14px/1.45 Inter,Segoe UI,Arial,sans-serif}button,select{font:inherit}.head{display:flex;justify-content:space-between;gap:18px;padding:18px 24px;border-bottom:1px solid #cbd5e1;background:#fff}.head h1,.head p{margin:0}.head h1{font-size:20px}.status{align-self:center;color:#1d4ed8;font-weight:800}.mock{margin:20px;overflow:hidden;border:1px solid #aeb9ca;border-radius:8px;background:#fff}.top{display:grid;grid-template-columns:auto auto 1fr auto;align-items:center;gap:18px;min-height:64px;padding:0 18px;border-bottom:1px solid #d7dde8}.logo{display:grid;width:36px;height:36px;place-items:center;border-radius:5px;background:#07549a;color:#fff;font-weight:900}.project small,.project strong{display:block}.small{color:#64748b;font-size:12px}.tabs,.actions{display:flex;justify-content:center;gap:7px}.tab,.button{min-height:40px;border:1px solid #aeb9ca;border-radius:6px;background:#fff;padding:0 13px;font-weight:700}.tab.active{border-color:transparent;background:#e8f0ff;color:#1d4ed8}.button.primary{border-color:#166534;background:#047857;color:#fff}.workspace{display:grid;height:790px;grid-template:650px 140px/220px minmax(540px,1fr) 400px}.explorer,.properties{overflow:auto;padding:16px}.explorer{border-right:1px solid #d7dde8}.properties{border-left:1px solid #d7dde8}.side-title{margin:0 0 13px;color:#475569;font-size:12px;text-transform:uppercase}.tree{margin:0;padding:0;list-style:none}.tree li{padding:6px 8px;border-radius:5px;color:#475569}.tree .indent{padding-left:22px}.tree .active{background:#e8f0ff;color:#1d4ed8;font-weight:800}.canvas{position:relative;overflow:hidden;background-color:#fbfcfe;background-image:radial-gradient(#d8dee9 1px,transparent 1px);background-size:20px 20px}.class{position:absolute;width:220px;border:1px solid #94a3b8;border-radius:7px;background:#fff;overflow:hidden}.class-title{padding:10px;background:#c7d2fe;text-align:center;font-weight:800}.class.abstract .class-title{font-style:italic}.stereotype{display:block;font-size:12px;font-style:normal}.student{left:13%;top:75px}.employee{right:13%;top:75px}.assistant{left:50%;top:405px;transform:translateX(-50%);border:2px solid #2563eb}.compartment{border-top:1px solid #cbd5e1;padding:8px 10px}.edge{position:absolute;top:240px;width:3px;height:190px;background:#2563eb;transform-origin:top}.edge:before{position:absolute;left:50%;top:-15px;width:20px;height:20px;transform:translateX(-50%) rotate(45deg);border-left:3px solid #2563eb;border-top:3px solid #2563eb;background:#fbfcfe;content:""}.left-edge{left:39%;transform:rotate(-33deg)}.right-edge{right:39%;transform:rotate(33deg)}.edge-label{position:absolute;top:330px;border-radius:4px;background:#e8f0ff;padding:4px 7px;color:#1d4ed8;font-size:12px;font-weight:800}.left-label{left:29%}.right-label{right:28%}.properties h2{margin:0 0 10px;font-size:17px}.segment,.feature-tabs{display:grid;margin-bottom:14px;border-radius:7px;background:#e5e7eb;padding:3px}.segment{grid-template-columns:repeat(3,1fr)}.feature-tabs{grid-template-columns:repeat(5,1fr)}.segment span,.feature-tabs button{border:0;padding:8px 3px;background:transparent;font-size:11px;text-align:center}.segment .active,.feature-tabs .active{border-radius:5px;background:#fff;font-weight:800}.summary{margin-bottom:14px;border-bottom:1px solid #d7dde8;padding-bottom:13px}.summary strong{display:block;font-size:16px}.detail-head{display:flex;align-items:center;justify-content:space-between;margin:12px 0 8px}.detail-head h3{margin:0;font-size:15px}.list{border:1px solid #cbd5e1;border-radius:6px;overflow:hidden}.item{display:flex;justify-content:space-between;gap:8px;padding:10px;border-bottom:1px solid #e2e8f0}.item:last-child{border:0}.item.selected{border-left:4px solid #2563eb;background:#eff6ff}.note,.success{margin:12px 0;border-left:4px solid;padding:10px}.note{border-color:#2563eb;background:#eff6ff;color:#1e40af}.success{border-color:#15803d;background:#f0fdf4;color:#166534}.bottom{grid-column:1/-1;border-top:1px solid #d7dde8;padding:12px 18px}.bottom strong{margin-right:20px}
+.relation{width:100%;border:0;background:#fff;text-align:left;cursor:pointer}.relation.selected{border-left:4px solid #2563eb;background:#eff6ff}.details{margin-top:14px;border-top:1px solid #cbd5e1;padding-top:12px}.details h3{margin:0 0 9px;font-size:15px}.field{display:grid;gap:5px;margin:9px 0;font-weight:700}.input{min-height:40px;border:1px solid #aeb9ca;border-radius:6px;background:#f8fafc;padding:8px 10px}.modal-backdrop{position:fixed;inset:0;z-index:20;display:grid;place-items:center;background:rgb(15 23 42/48%);padding:20px}.modal-backdrop[hidden]{display:none}.modal{width:min(560px,100%);max-height:85vh;overflow:auto;border-radius:8px;background:#fff;box-shadow:0 20px 50px rgb(15 23 42/28%)}.modal-head,.modal-body,.modal-actions{padding:16px}.modal-head{display:flex;justify-content:space-between;border-bottom:1px solid #d7dde8}.modal-head h2{margin:0;font-size:18px}.modal-actions{display:flex;justify-content:flex-end;gap:8px;border-top:1px solid #d7dde8}.candidate{display:flex;justify-content:space-between;gap:10px;width:100%;margin:7px 0;border:1px solid #d7dde8;border-radius:6px;background:#fff;padding:10px;text-align:left}.candidate.selected{border-color:#2563eb;background:#eff6ff;color:#1d4ed8}.candidate:disabled{background:#f8fafc;color:#64748b}.search{width:100%;min-height:40px;border:1px solid #aeb9ca;border-radius:6px;padding:8px 10px}.card{margin:20px;overflow:hidden;border:1px solid #aeb9ca;border-radius:8px;background:#fff}.card>h2{margin:0;padding:14px 18px;border-bottom:1px solid #d7dde8;font-size:17px}.modal-demo{display:grid;grid-template-columns:minmax(280px,560px) minmax(260px,1fr);gap:24px;align-items:start;padding:20px;background:#f8fafc}.modal-inline{position:static;display:block;background:transparent;padding:0}.modal-inline .modal{max-height:none;border:1px solid #cbd5e1}.annotation{padding:6px 0}.annotation h3{margin-top:0}.annotation li{margin:8px 0}@media(max-width:900px){.modal-demo{grid-template-columns:1fr}}.edge-hit{border:0;padding:0;cursor:pointer}.edge-hit:not(.selected-edge){background:#64748b}.edge-hit:not(.selected-edge):before{border-left-color:#64748b;border-top-color:#64748b}.state-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px;padding:16px}.state{border:1px solid #d7dde8;border-radius:6px;padding:13px}.state h3{margin:0 0 8px}.loading-message,.empty-message{border-left:4px solid;padding:10px}.loading-message{border-color:#2563eb;background:#eff6ff;color:#1e40af}.empty-message{border-color:#64748b;background:#f8fafc;color:#334155}@media(max-width:800px){.state-grid{grid-template-columns:1fr}}.quick-help{position:absolute;right:16px;bottom:16px;width:290px;border:1px solid #2563eb;border-left-width:4px;border-radius:6px;background:#fff;padding:12px;box-shadow:0 8px 20px rgb(15 23 42/12%)}.quick-help strong{display:block;margin-bottom:5px}.error-message,.warning-message{border-left:4px solid;padding:10px}.error-message{border-color:#dc2626;background:#fef2f2;color:#991b1b}.warning-message{border-color:#d97706;background:#fffbeb;color:#92400e}.chain{font-family:Consolas,monospace;overflow-wrap:anywhere}</style>
+<style>
+  .inherited-panel{margin-top:8px;border:1px solid #bfdbfe;border-radius:6px;background:#fff;overflow:hidden;color:#172033}
+  .inherited-head{display:flex;align-items:center;justify-content:space-between;gap:8px;padding:9px 10px;background:#eff6ff}
+  .inherited-group-title{display:flex;justify-content:space-between;gap:8px;padding:8px 10px;border-top:1px solid #dbeafe;background:#f8fafc;font-size:12px}
+  .inherited-feature{display:flex;align-items:center;justify-content:space-between;gap:8px;padding:9px 10px;border-top:1px solid #e2e8f0}
+  .inherited-feature code{color:#172033}.readonly-badge{white-space:nowrap;border-radius:10px;background:#e2e8f0;padding:2px 7px;color:#475569;font-size:10px}.open-owner{min-height:32px;padding:0 9px;font-size:11px}
+  .feature-tabs{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:3px;margin-bottom:14px;border-bottom:1px solid #d7dde8;border-radius:0;background:transparent;padding:0}
+  .feature-tabs button{min-width:0;border:0;border-radius:0;background:transparent;padding:9px 4px;color:#64748b;text-align:center;font-size:12px}
+  .feature-tabs .active{border-radius:0;border-bottom:3px solid #2563eb;background:transparent;color:#172033;font-weight:800}
+</style>
+</head>
+<body>
+<header class="head">
+<div>
+<h1>Class Properties · Generalizations</h1>
+<p>Bestehende Vererbungen bearbeiten und weitere direkte Supertypen hinzufügen</p>
+</div>
+<span class="status">OFFICIAL MOCKUP</span>
+</header>
+<section class="mock">
+<header class="top">
+<span class="logo">USE</span>
+<span class="project">
+<small>Project</small>
+<strong>University System</strong>
+</span>
+<nav class="tabs">
+<button class="tab active">Class Diagram</button>
+<button class="tab">Object Diagram</button>
+<button class="tab">OCL Editor</button>
+</nav>
+<div class="actions">
+<button class="tab">Refresh</button>
+<button class="button primary">Check Constraints</button>
+</div>
+</header>
+<div class="workspace">
+<aside class="explorer">
+<h2 class="side-title">Explorer</h2>
+<ul class="tree">
+<li>
+<strong>Classes</strong>
+</li>
+<li class="indent">
+<em>Student</em> · abstract</li>
+<li class="indent">
+<em>Employee</em> · abstract</li>
+<li class="indent">Researcher</li>
+<li class="indent">SeniorTeachingAssistant</li>
+<li class="indent active">TeachingAssistant</li>
+<li>
+<strong>Generalizations</strong>
+</li>
+<li class="indent active">TeachingAssistant → Student</li>
+<li class="indent active">TeachingAssistant → Employee</li>
+</ul>
+</aside>
+<section class="canvas">
+<article class="class abstract student">
+<div class="class-title">
+<span class="stereotype">«abstract»</span>Student</div>
+<div class="compartment">studentId : String</div>
+</article>
+<article class="class abstract employee">
+<div class="class-title">
+<span class="stereotype">«abstract»</span>Employee</div>
+<div class="compartment">employeeNo : String</div>
+</article>
+<button class="edge edge-hit left-edge selected-edge" data-edge-supertype="Student" aria-label="Select TeachingAssistant to Student generalization">
+</button>
+<button class="edge edge-hit right-edge" data-edge-supertype="Employee" aria-label="Select TeachingAssistant to Employee generalization">
+</button>
+<span class="edge-label left-label">→ Student</span>
+<span class="edge-label right-label">→ Employee</span>
+<article class="class assistant">
+<div class="class-title">TeachingAssistant</div>
+<div class="compartment">hoursPerWeek : Integer</div>
+</article>
+<aside class="quick-help">
+<strong>Vererbung (Generalisierung)</strong>Das ungefüllte Dreieck zeigt zur Superclass. Die speziellere Subclass erbt sichtbare Merkmale. Eine Generalisierung ist keine Association und erzeugt keine Object Links.</aside>
+</section>
+<aside class="properties">
+<h2>Class Properties</h2>
+<div class="segment">
+<span class="active">Class</span>
+<span>Association</span>
+<span>Invariant</span>
+</div>
+<div class="summary">
+<strong>TeachingAssistant</strong>
+<span class="small">university::people::TeachingAssistant</span>
+</div>
+<div class="feature-tabs">
+<button>Details</button>
+<button>Attributes · 1</button>
+<button>Operations · 0</button>
+<button class="active">Generalizations · 2</button><button>Definitions · 2</button></div>
+<div class="detail-head">
+<h3>Current direct supertypes</h3>
+<button id="open-supertype-modal" class="button">Vererbung hinzufügen</button>
+</div>
+<div id="supertype-list" class="list">
+<button class="item relation selected" data-supertype="Student">
+<span>TeachingAssistant → Student</span>
+<span class="small">direct</span>
+</button>
+<button class="item relation" data-supertype="Employee">
+<span>TeachingAssistant → Employee</span>
+<span class="small">direct</span>
+</button>
+</div>
+<section class="details">
+<h3>Generalization Details</h3>
+<label class="field">Subclass<span class="input">TeachingAssistant</span>
+</label>
+<label class="field">Superclass<span id="selected-superclass" class="input">Student</span>
+</label>
+<label class="field">Inheritance chain<span id="inheritance-chain" class="input chain">TeachingAssistant → Student → Person</span>
+</label>
+<div class="note">
+<strong>Inherited Features</strong>
+<br>
+<span class="small">Effective through the selected Generalization; read-only in TeachingAssistant.</span>
+<div id="inherited-features" class="inherited-panel">
+<div class="inherited-head"><span><strong>Defined by Student</strong><br><span class="small">direct Superclass</span></span><button class="button open-owner">Open Student</button></div>
+<div class="inherited-group-title"><strong>Attributes · 1</strong><span>owned by Student</span></div>
+<div class="inherited-feature"><code>+ studentId : String [1]</code><span class="readonly-badge">inherited · read-only</span></div>
+<div class="inherited-group-title"><strong>Operations · 1</strong><span>owned by Student</span></div>
+<div class="inherited-feature"><code>+ enroll(course : Course) : Boolean</code><span class="readonly-badge">inherited · read-only</span></div>
+</div>
+</div>
+<p class="small">Die Subclass ist durch die ausgewählte Klasse festgelegt. Ein Klick auf einen Direct Supertype lädt genau diese Beziehung zur Bearbeitung.</p>
+<div class="actions">
+<button id="open-remove-modal" class="button">Remove Generalization</button>
+<button class="button primary">Save Generalization</button>
+</div>
+</section>
+<div class="note">
+<strong>Mehrfachvererbung</strong>
+<br>Alle Listeneinträge sind direkte Generalisierungen. Die sichtbare Reihenfolge definiert keine Dispatch- oder Konfliktpriorität.</div>
+<div id="generalization-success" class="success">
+<strong>Valid:</strong> No cycle or inherited signature conflict was found.</div>
+</aside>
+<div class="bottom">
+<strong>Validation Results</strong>
+<span>TeachingAssistant has 2 direct supertypes: Student and Employee.</span>
+</div>
+</div>
+</section>
+<section class="card">
+<h2>Modal state · Vererbung hinzufügen</h2>
+<div class="modal-demo">
+<div class="modal-inline">
+<section class="modal" aria-label="Documented Add Supertype modal">
+<header class="modal-head">
+<div>
+<h2>Add Supertype</h2>
+<span class="small">Create a direct generalization</span>
+</div>
+<button class="button" aria-label="Close modal preview">×</button>
+</header>
+<div class="modal-body">
+<label class="field">Subclass<span class="input">TeachingAssistant</span>
+</label>
+<label class="field">Search superclass<input class="search" placeholder="Search classes">
+</label>
+<h3>Superclass candidates</h3>
+<button class="candidate selected">
+<strong>Researcher</strong>
+<span>Available</span>
+</button>
+<button class="candidate">
+<strong>Person</strong>
+<span>Available</span>
+</button>
+<button class="candidate" disabled>
+<strong>TeachingAssistant</strong>
+<span>Current subclass</span>
+</button>
+<button class="candidate" disabled>
+<strong>Student</strong>
+<span>Already a direct supertype</span>
+</button>
+<button class="candidate" disabled>
+<strong>Employee</strong>
+<span>Already a direct supertype</span>
+</button>
+<button class="candidate" disabled>
+<strong>SeniorTeachingAssistant</strong>
+<span>Would create a cycle</span>
+</button>
+</div>
+<footer class="modal-actions">
+<button class="button">Cancel</button>
+<button class="button primary">Add Researcher</button>
+</footer>
+</section>
+</div>
+<aside class="annotation">
+<h3>Interaction</h3>
+<ol>
+<li>The modal opens only after <strong>Vererbung hinzufügen</strong>.</li>
+<li>The selected class fixes the read-only Subclass.</li>
+<li>Available candidates can be selected; invalid candidates remain visible with a reason.</li>
+<li>After Add, the modal closes and the new relationship appears under Current direct supertypes.</li>
+</ol>
+</aside>
+</div>
+</section>
+<section class="card">
+<h2>Loading and empty states</h2>
+<div class="state-grid">
+<article class="state">
+<h3>Loading · Validate generalization</h3>
+<div class="loading-message">
+<strong>Validating generalization…</strong>
+<br>Cycles, inherited signatures and affected OCL expressions are being checked.</div>
+<div class="actions" style="margin-top:12px">
+<button class="button">Cancel</button>
+<button class="button primary" disabled>Validating…</button>
+</div>
+</article>
+<article class="state">
+<h3>Empty · No direct supertypes</h3>
+<div class="empty-message">
+<strong>No direct supertypes</strong>
+<br>The selected class does not inherit directly from another class.</div>
+<button class="button" style="margin-top:12px">Vererbung hinzufügen</button>
+</article>
+<article class="state">
+<h3>Empty · No candidates</h3>
+<div class="empty-message">
+<strong>No matching superclass candidates</strong>
+<br>Change the search term or review disabled classes.</div>
+<button class="button" style="margin-top:12px">Clear search</button>
+</article>
+</div>
+</section>
+<section class="card">
+<h2>Structured generalization diagnostics</h2>
+<div class="state-grid">
+<article class="state">
+<h3>Unknown superclass</h3>
+<div class="error-message">
+<strong>UNKNOWN_SUPERCLASS</strong>
+<br>ArchivedPerson no longer exists. Choose an existing class.</div>
+<button class="button" style="margin-top:12px">Choose Superclass</button>
+</article>
+<article class="state">
+<h3>Generalization cycle</h3>
+<div class="error-message">
+<strong>GENERALIZATION_CYCLE</strong>
+<br>TeachingAssistant → SeniorTeachingAssistant would form a cycle because SeniorTeachingAssistant is already a descendant.</div>
+<button class="button" style="margin-top:12px">Review inheritance chain</button>
+</article>
+<article class="state">
+<h3>Inherited feature conflict</h3>
+<div class="warning-message">
+<strong>INHERITED_FEATURE_CONFLICT</strong>
+<br>TeachingAssistant::identifier is inherited from Student and Employee with incompatible types.</div>
+<p class="small">The backend identifies the subclass, both supertypes, feature kind and feature name. List order does not resolve the conflict.</p>
+</article>
+</div>
+</section>
+<div id="supertype-modal" class="modal-backdrop" hidden>
+<section class="modal" role="dialog" aria-modal="true" aria-labelledby="modal-title">
+<header class="modal-head">
+<div>
+<h2 id="modal-title">Add Supertype</h2>
+<span class="small">Create a direct generalization</span>
+</div>
+<button id="close-supertype-modal" class="button" aria-label="Close">×</button>
+</header>
+<div class="modal-body">
+<label class="field">Subclass<span class="input">TeachingAssistant</span>
+</label>
+<label class="field">Search superclass<input class="search" placeholder="Search classes">
+</label>
+<h3>Superclass candidates</h3>
+<button class="candidate selected" data-candidate="Researcher">
+<strong>Researcher</strong>
+<span>Available</span>
+</button>
+<button class="candidate" data-candidate="Person">
+<strong>Person</strong>
+<span>Available</span>
+</button>
+<button class="candidate" disabled>
+<strong>TeachingAssistant</strong>
+<span>Current subclass</span>
+</button>
+<button class="candidate" disabled>
+<strong>Student</strong>
+<span>Already a direct supertype</span>
+</button>
+<button class="candidate" disabled>
+<strong>Employee</strong>
+<span>Already a direct supertype</span>
+</button>
+<button class="candidate" disabled>
+<strong>SeniorTeachingAssistant</strong>
+<span>Would create a cycle</span>
+</button>
+<p class="small">SeniorTeachingAssistant is a descendant of TeachingAssistant. Selecting it as a superclass would close a cycle.</p>
+</div>
+<footer class="modal-actions">
+<button id="cancel-supertype-modal" class="button">Cancel</button>
+<button id="add-supertype" class="button primary">Add Researcher</button>
+</footer>
+</section>
+</div>
+<div id="remove-modal" class="modal-backdrop" hidden>
+<section class="modal" role="dialog" aria-modal="true" aria-labelledby="remove-title">
+<header class="modal-head">
+<div>
+<h2 id="remove-title">Remove Generalization?</h2>
+<span class="small">This changes inherited model features</span>
+</div>
+<button id="close-remove-modal" class="button" aria-label="Close remove confirmation">×</button>
+</header>
+<div class="modal-body">
+<p>Remove <strong id="remove-relation-name">TeachingAssistant → Student</strong>?</p>
+<div class="note">
+<strong>Impact</strong>
+<br>The inherited features shown in Generalization Details will no longer be available. Dependent OCL expressions will be validated again.</div>
+</div>
+<footer class="modal-actions">
+<button id="cancel-remove" class="button">Cancel</button>
+<button id="confirm-remove" class="button">Remove Generalization</button>
+</footer>
+</section>
+</div>
+<script>const relations=document.querySelectorAll(".relation");const edges=document.querySelectorAll(".edge-hit");const selectedSuperclass=document.getElementById("selected-superclass");const inherited=document.getElementById("inherited-features");const inheritanceChain=document.getElementById("inheritance-chain");const featureMap={Student:"studentId : String<br>enroll(course : Course) : Boolean",Employee:"employeeNo : String<br>weeklyHours : Integer",Researcher:"researchArea : String<br>publish() : Boolean"};const chainMap={Student:"TeachingAssistant → Student → Person",Employee:"TeachingAssistant → Employee → Person",Researcher:"TeachingAssistant → Researcher"};function selectRelation(name){document.querySelectorAll(".relation").forEach(item=>item.classList.toggle("selected",item.dataset.supertype===name));edges.forEach(edge=>edge.classList.toggle("selected-edge",edge.dataset.edgeSupertype===name));selectedSuperclass.textContent=name;inheritanceChain.textContent=chainMap[name]||"TeachingAssistant → "+name;inherited.innerHTML=featureMap[name]||"No inherited features"}relations.forEach(button=>button.addEventListener("click",()=>selectRelation(button.dataset.supertype)));edges.forEach(edge=>edge.addEventListener("click",()=>selectRelation(edge.dataset.edgeSupertype)));const modal=document.getElementById("supertype-modal");const openModal=()=>{modal.hidden=false};const closeModal=()=>{modal.hidden=true};document.getElementById("open-supertype-modal").addEventListener("click",openModal);document.getElementById("close-supertype-modal").addEventListener("click",closeModal);document.getElementById("cancel-supertype-modal").addEventListener("click",closeModal);document.querySelectorAll(".candidate:not(:disabled)").forEach(button=>button.addEventListener("click",()=>{document.querySelectorAll(".candidate").forEach(item=>item.classList.remove("selected"));button.classList.add("selected");document.getElementById("add-supertype").textContent="Add "+button.dataset.candidate}));document.getElementById("add-supertype").addEventListener("click",()=>{const chosen=document.querySelector(".candidate.selected").dataset.candidate;const button=document.createElement("button");button.className="item relation";button.dataset.supertype=chosen;button.innerHTML="<span>TeachingAssistant → "+chosen+"</span><span class=small>direct</span>";button.addEventListener("click",()=>{document.querySelectorAll(".relation").forEach(item=>item.classList.remove("selected"));button.classList.add("selected");selectedSuperclass.textContent=chosen;inheritanceChain.textContent=chainMap[chosen]||"TeachingAssistant → "+chosen;inherited.innerHTML=featureMap[chosen]||"No inherited features"});document.getElementById("supertype-list").appendChild(button);document.getElementById("generalization-success").innerHTML="<strong>Added:</strong> TeachingAssistant → "+chosen+" is now a direct generalization.";closeModal()});const removeModal=document.getElementById("remove-modal");const closeRemove=()=>{removeModal.hidden=true};document.getElementById("open-remove-modal").addEventListener("click",()=>{const selected=document.querySelector(".relation.selected");document.getElementById("remove-relation-name").textContent=selected?selected.textContent.replace("direct","").trim():"the selected generalization";removeModal.hidden=false});document.getElementById("close-remove-modal").addEventListener("click",closeRemove);document.getElementById("cancel-remove").addEventListener("click",closeRemove);document.getElementById("confirm-remove").addEventListener("click",()=>{const selected=document.querySelector(".relation.selected");if(selected){const name=selected.dataset.supertype;selected.remove();const edge=document.querySelector(`[data-edge-supertype="${name}"]`);if(edge)edge.hidden=true;const next=document.querySelector(".relation");if(next){selectRelation(next.dataset.supertype)}else{selectedSuperclass.textContent="None";inheritanceChain.textContent="TeachingAssistant";inherited.textContent="No inherited features"}document.getElementById("generalization-success").innerHTML="<strong>Removed:</strong> TeachingAssistant → "+name+" was removed. Dependent OCL expressions were revalidated."}closeRemove()});</script>
+<script>
+const inheritedFeatureData={Student:{attribute:"+ studentId : String [1]",operation:"+ enroll(course : Course) : Boolean"},Employee:{attribute:"+ employeeNo : String [1]",operation:"+ weeklyHours() : Integer"},Researcher:{attribute:"+ researchArea : String [0..1]",operation:"+ publish() : Boolean"}};
+function renderInheritedFeatures(name){const data=inheritedFeatureData[name];if(!data)return;document.getElementById("inherited-features").innerHTML='<div class="inherited-head"><span><strong>Defined by '+name+'</strong><br><span class="small">direct Superclass</span></span><button class="button open-owner">Open '+name+'</button></div><div class="inherited-group-title"><strong>Attributes · 1</strong><span>owned by '+name+'</span></div><div class="inherited-feature"><code>'+data.attribute+'</code><span class="readonly-badge">inherited · read-only</span></div><div class="inherited-group-title"><strong>Operations · 1</strong><span>owned by '+name+'</span></div><div class="inherited-feature"><code>'+data.operation+'</code><span class="readonly-badge">inherited · read-only</span></div>'}
+document.addEventListener("click",event=>{const target=event.target.closest(".relation,.edge-hit");if(target)renderInheritedFeatures(target.dataset.supertype||target.dataset.edgeSupertype)});
+</script>
+</body>
+</html>
+

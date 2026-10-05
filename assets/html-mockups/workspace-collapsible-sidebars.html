@@ -1,0 +1,162 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Workspace · Collapsible Sidebars</title>
+  <style>
+    * { box-sizing: border-box; }
+    :root { color: #172033; font: 14px Arial, sans-serif; }
+    body { margin: 0; background: #eef1f5; }
+    button, input { font: inherit; }
+    button { cursor: pointer; }
+    .page { max-width: 1500px; margin: 0 auto; padding: 22px; }
+    .doc-head { display: flex; align-items: center; justify-content: space-between; margin-bottom: 14px; }
+    .doc-head h1 { margin: 0; font-size: 24px; }
+    .doc-head p { margin: 5px 0 0; color: #64748b; }
+    .status { border-radius: 4px; background: #e6f6ec; padding: 7px 10px; color: #166534; font-size: 12px; font-weight: 800; }
+    .mockup { overflow: hidden; border: 1px solid #cbd5e1; border-radius: 7px; background: #fff; box-shadow: 0 6px 20px #17203316; }
+    .top { display: flex; height: 62px; align-items: center; gap: 16px; border-bottom: 1px solid #d7dde8; padding: 0 16px; }
+    .logo { background: #1d4ed8; color: #fff; padding: 8px 10px; font-weight: 800; }
+    .project { display: grid; }
+    .project small { color: #64748b; }
+    .top-tabs { display: flex; gap: 6px; margin: auto; }
+    .top-tabs button, .action { min-height: 38px; border: 1px solid transparent; border-radius: 6px; background: transparent; padding: 0 14px; color: #172033; }
+    .top-tabs .active { background: #e5edfb; color: #1d4ed8; font-weight: 800; }
+    .action { border-color: #cbd5e1; background: #fff; }
+
+    .workspace {
+      --left-width: 300px;
+      --right-width: 390px;
+      display: grid;
+      height: 760px;
+      min-width: 0;
+      grid-template: minmax(0, 1fr) 150px / var(--left-width) minmax(0, 1fr) var(--right-width);
+      transition: grid-template-columns 180ms ease;
+    }
+    .workspace.left-collapsed { --left-width: 46px; }
+    .workspace.right-collapsed { --right-width: 46px; }
+    .sidebar { min-width: 0; overflow: hidden; background: #fff; }
+    .sidebar-left { border-right: 1px solid #d7dde8; }
+    .sidebar-right { border-left: 1px solid #d7dde8; }
+    .sidebar-content { height: 100%; overflow: auto; padding: 16px; }
+    .sidebar-rail { display: none; height: 100%; justify-content: center; padding-top: 12px; background: #f8fafc; }
+    .left-collapsed .sidebar-left .sidebar-content,
+    .right-collapsed .sidebar-right .sidebar-content { display: none; }
+    .left-collapsed .sidebar-left .sidebar-rail,
+    .right-collapsed .sidebar-right .sidebar-rail { display: flex; }
+    .panel-head { display: flex; align-items: center; justify-content: space-between; gap: 10px; margin-bottom: 14px; }
+    .panel-head h2 { margin: 0; color: #475569; font-size: 13px; text-transform: uppercase; }
+    .icon-button { display: inline-grid; width: 32px; height: 32px; flex: 0 0 32px; place-items: center; border: 1px solid #c5cfdd; border-radius: 5px; background: #fff; color: #334155; font-size: 20px; line-height: 1; }
+    .icon-button:hover, .icon-button:focus-visible { border-color: #2563eb; background: #eff6ff; color: #1d4ed8; outline: none; }
+    .search { width: 100%; border: 1px solid #b7c2d1; border-radius: 5px; padding: 10px; }
+    .section-title { display: flex; align-items: center; justify-content: space-between; margin: 17px 0 7px; color: #475569; font-size: 12px; font-weight: 800; text-transform: uppercase; }
+    .tree { display: grid; gap: 3px; margin: 0; padding: 0; list-style: none; }
+    .tree button { width: 100%; border: 0; border-radius: 5px; background: transparent; padding: 8px; text-align: left; }
+    .tree .active { background: #e8f0ff; color: #1d4ed8; font-weight: 800; }
+    .indent-1 { padding-left: 26px !important; }
+    .indent-2 { padding-left: 45px !important; }
+    .dot { display: inline-block; width: 9px; height: 9px; margin-right: 7px; border-radius: 50%; background: #3978d4; }
+    .canvas { position: relative; min-width: 0; overflow: hidden; background-color: #fbfcfe; background-image: radial-gradient(#d8dee9 1px, transparent 1px); background-size: 20px 20px; }
+    .toolbar { position: absolute; z-index: 2; top: 20px; left: 50%; display: flex; gap: 6px; transform: translateX(-50%); border: 1px solid #cbd5e1; border-radius: 7px; background: #fff; padding: 6px; box-shadow: 0 6px 16px #17203320; }
+    .toolbar button { border: 1px solid #93b4e8; border-radius: 5px; background: #e8f1ff; padding: 8px 12px; color: #174f9c; font-weight: 700; }
+    .node { position: absolute; width: 245px; overflow: hidden; border: 2px solid #2563eb; border-radius: 7px; background: #fff; box-shadow: 0 5px 14px #1720331c; }
+    .node-person { top: 145px; left: 14%; }
+    .node-course { top: 330px; right: 12%; border-width: 1px; border-color: #8290a3; }
+    .node strong { display: block; background: #dbeafe; padding: 9px; text-align: center; }
+    .node div { border-top: 1px solid #aeb9ca; padding: 9px 11px; line-height: 1.7; }
+    .canvas-note { position: absolute; right: 18px; bottom: 16px; border: 1px solid #cbd5e1; border-radius: 5px; background: #fff; padding: 8px 10px; color: #526176; font-size: 12px; }
+    .summary { display: grid; gap: 3px; margin-bottom: 13px; border-bottom: 1px solid #d7dde8; padding: 0 0 13px; }
+    .summary strong { font-size: 18px; }
+    .summary span { color: #64748b; }
+    .feature-tabs { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); border-bottom: 1px solid #d7dde8; }
+    .feature-tabs button { min-width: 0; min-height: 43px; border: 0; border-bottom: 3px solid transparent; background: transparent; padding: 6px 3px; color: #5b6f8f; font-size: 11px; }
+    .feature-tabs .active { border-bottom-color: #2563eb; color: #172033; font-weight: 800; }
+    .field { display: grid; gap: 5px; margin-top: 13px; font-weight: 700; }
+    .field input { width: 100%; border: 1px solid #b9c4d3; border-radius: 5px; padding: 10px; }
+    .hint { margin-top: 16px; border-left: 4px solid #2563eb; background: #eff6ff; padding: 11px; color: #334155; }
+    .bottom { grid-column: 1 / -1; overflow: hidden; border-top: 1px solid #d7dde8; background: #fff; }
+    .bottom-tabs { display: flex; height: 48px; gap: 8px; border-bottom: 1px solid #d7dde8; padding: 0 14px; }
+    .bottom-tabs button { border: 0; border-bottom: 3px solid transparent; background: transparent; padding: 0 12px; }
+    .bottom-tabs .active { border-bottom-color: #2563eb; font-weight: 800; }
+    .console { padding: 16px; color: #475569; }
+    .state { margin-top: 12px; color: #526176; font-size: 12px; }
+    @media (max-width: 1050px) { .page { min-width: 1050px; } }
+  </style>
+</head>
+<body>
+  <main class="page">
+    <header class="doc-head">
+      <div><h1>Workspace · Collapsible Sidebars</h1><p>Interactive reference for independently folding Explorer and Properties</p></div>
+      <span class="status">INTERACTION MOCKUP</span>
+    </header>
+
+    <section class="mockup">
+      <header class="top">
+        <span class="logo">USE</span>
+        <span class="project"><small>Project</small><strong>University System</strong></span>
+        <nav class="top-tabs" aria-label="Workspace views"><button class="active">Class Diagram</button><button>Object Diagram</button><button>OCL Editor</button></nav>
+        <button class="action">Refresh</button>
+      </header>
+
+      <div class="workspace" id="workspace">
+        <aside class="sidebar sidebar-left" aria-label="Explorer">
+          <div class="sidebar-content">
+            <header class="panel-head"><h2>Explorer</h2><button class="icon-button" id="collapse-left" aria-label="Collapse Explorer" title="Collapse Explorer">‹</button></header>
+            <input class="search" aria-label="Search model" placeholder="Search model…">
+            <div class="section-title"><span>Project model</span><button class="icon-button" title="Create model element">+</button></div>
+            <ul class="tree">
+              <li><button>⌄ Project root</button></li>
+              <li><button class="indent-1">⌄ university</button></li>
+              <li><button class="indent-2 active"><span class="dot"></span>Person</button></li>
+              <li><button class="indent-2"><span class="dot"></span>Student</button></li>
+              <li><button class="indent-2"><span class="dot"></span>Course</button></li>
+            </ul>
+            <div class="section-title"><span>Imports</span><button class="icon-button" title="Add import">+</button></div>
+            <ul class="tree"><li><button>⌄ shared::core</button></li><li><button class="indent-1"><span class="dot"></span>NamedElement</button></li></ul>
+          </div>
+          <div class="sidebar-rail"><button class="icon-button" id="expand-left" aria-label="Expand Explorer" title="Expand Explorer">›</button></div>
+        </aside>
+
+        <section class="canvas" aria-label="Class diagram canvas">
+          <nav class="toolbar"><button>Class</button><button>Association</button><button>Invariant</button><button>Enumeration</button><button>DataType</button></nav>
+          <article class="node node-person"><strong>Person</strong><div>+ name : String<br>+ birthDate : Date</div><div>+ displayName() : String</div></article>
+          <article class="node node-course"><strong>Course</strong><div>+ code : CourseCode<br>+ title : String</div></article>
+          <span class="canvas-note" id="canvas-note">Both sidebars expanded</span>
+        </section>
+
+        <aside class="sidebar sidebar-right" aria-label="Properties Panel">
+          <div class="sidebar-content">
+            <header class="panel-head"><h2>Class Properties</h2><button class="icon-button" id="collapse-right" aria-label="Collapse Properties" title="Collapse Properties">›</button></header>
+            <div class="summary"><strong>Person</strong><span>university::people::Person · public (+)</span></div>
+            <nav class="feature-tabs" aria-label="Class features"><button class="active">Details</button><button>Attributes</button><button>Operations</button><button>Generalizations</button><button>Definitions</button></nav>
+            <label class="field">Class Name<input value="Person"></label>
+            <label class="field">Qualified Name<input value="university::people::Person" readonly></label>
+            <div class="hint"><strong>Independent panel behavior</strong><br>The right sidebar can be collapsed without clearing the diagram. Its edge button remains reachable.</div>
+          </div>
+          <div class="sidebar-rail"><button class="icon-button" id="expand-right" aria-label="Expand Properties" title="Expand Properties">‹</button></div>
+        </aside>
+
+        <section class="bottom" aria-label="Bottom panel">
+          <nav class="bottom-tabs"><button class="active">Console</button><button>Diagnostics</button><button>Validation Results</button><button>Invocation Results</button></nav>
+          <div class="console">Sidebar state changes only the workspace layout. Selection and model state remain unchanged.</div>
+        </section>
+      </div>
+    </section>
+    <p class="state">Use the arrow buttons in either sidebar header. When collapsed, a persistent edge button restores that sidebar.</p>
+  </main>
+  <script>
+    const workspace = document.getElementById('workspace');
+    const note = document.getElementById('canvas-note');
+    function updateNote() {
+      const left = workspace.classList.contains('left-collapsed');
+      const right = workspace.classList.contains('right-collapsed');
+      note.textContent = left && right ? 'Both sidebars collapsed' : left ? 'Explorer collapsed' : right ? 'Properties collapsed' : 'Both sidebars expanded';
+    }
+    document.getElementById('collapse-left').addEventListener('click', () => { workspace.classList.add('left-collapsed'); updateNote(); });
+    document.getElementById('expand-left').addEventListener('click', () => { workspace.classList.remove('left-collapsed'); updateNote(); });
+    document.getElementById('collapse-right').addEventListener('click', () => { workspace.classList.add('right-collapsed'); updateNote(); });
+    document.getElementById('expand-right').addEventListener('click', () => { workspace.classList.remove('right-collapsed'); updateNote(); });
+  </script>
+</body>
+</html>
